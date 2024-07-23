@@ -1,9 +1,6 @@
 package br.com.rsfot.bookstore.author;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
 import java.time.LocalDateTime;
@@ -11,6 +8,7 @@ import java.time.LocalDateTime;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
+@Table(name = "author")
 public class Author {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -33,7 +31,14 @@ public class Author {
      * eyes only hibernate
      */
     @Deprecated
-    public Author () {}
+    public Author() {
+    }
+
+    public Author(String name, String email, String description) {
+        this.name = name;
+        this.email = email;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
@@ -53,5 +58,16 @@ public class Author {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", description='" + description + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }
