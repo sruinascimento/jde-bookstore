@@ -17,7 +17,7 @@ public class CategoryController {
 
     @PostMapping("/category")
     @Transactional
-    public ResponseEntity create(@Valid @RequestBody NewCategoryRequest newCategoryRequest) {
+    public ResponseEntity<NewCategoryResponse> create(@Valid @RequestBody NewCategoryRequest newCategoryRequest) {
         Category newCategory = newCategoryRequest.toEntity();
 
         categoryRepository.save(newCategory);
