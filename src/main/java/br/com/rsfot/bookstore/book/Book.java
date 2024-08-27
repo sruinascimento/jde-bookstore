@@ -4,7 +4,6 @@ import br.com.rsfot.bookstore.author.Author;
 import br.com.rsfot.bookstore.category.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,7 +23,7 @@ public class Book {
     @Column(nullable = false)
     private String summary;
 
-    @Column(name = "table_of_content", nullable = false)
+    @Column(name = "table_of_content")
     private String tableOfContent;
 
     @Column(nullable = false)
