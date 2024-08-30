@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Future;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -28,6 +29,9 @@ public class Book {
 
     @Column(nullable = false)
     private BigDecimal price;
+
+    @Column(name = "number_of_pages", nullable = false)
+    private int numberOfPages;
 
     @Column(nullable = false, unique = true)
     private String isbn;
@@ -56,6 +60,7 @@ public class Book {
                 String summary,
                 String tableOfContent,
                 BigDecimal price,
+                int numberOfPages,
                 String isbn,
                 LocalDateTime publicationDate,
                 Category category,
@@ -64,11 +69,13 @@ public class Book {
         this.summary = summary;
         this.tableOfContent = tableOfContent;
         this.price = price;
+        this.numberOfPages = numberOfPages;
         this.isbn = isbn;
         this.publicationDate = publicationDate;
         this.category = category;
         this.author = author;
     }
+
 
     public Long getId() {
         return id;
@@ -90,16 +97,32 @@ public class Book {
         return price;
     }
 
+    public int getNumberOfPages() {
+        return numberOfPages;
+    }
+
     public String getIsbn() {
         return isbn;
     }
 
-    public @Future LocalDateTime getPublicationDate() {
+    public LocalDateTime getPublicationDate() {
         return publicationDate;
+    }
+
+    public String getPublicationDateAsBrFormat() {
+        return publicationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss"));
     }
 
     public Category getCategory() {
         return category;
+    }
+
+    public String getCategoryName() {
+        return category.getName();
+    }
+
+    public String getAuthorName() {
+        return author.getName();
     }
 
     public Author getAuthor() {
@@ -114,6 +137,7 @@ public class Book {
                 ", summary='" + summary + '\'' +
                 ", tableOfContent='" + tableOfContent + '\'' +
                 ", price=" + price +
+                ", numberOfPages=" + numberOfPages +
                 ", isbn='" + isbn + '\'' +
                 ", publicationDate=" + publicationDate +
                 ", category=" + category +

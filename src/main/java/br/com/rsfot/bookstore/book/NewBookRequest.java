@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record NewBookRequest(
@@ -41,13 +40,16 @@ public record NewBookRequest(
         String emailAuthor) {
 
         public Book toModel(Category category, Author author) {
-                return new Book(title(),
-                        summary(),
-                        tableOfContent(),
-                        price(),
-                        isbn(),
-                        publicationDate(),
-                        category,
-                        author);
+                return new BookBuilder()
+                        .withTitle(this.title)
+                        .withSummary(this.summary)
+                        .withTableOfContent(this.tableOfContent)
+                        .withPrice(this.price)
+                        .withNumberOfPages(this.numberOfPages)
+                        .withIsbn(this.isbn)
+                        .withPublicationDate(this.publicationDate)
+                        .withCategory(category)
+                        .withAuthor(author)
+                        .build();
         }
 }
