@@ -30,18 +30,16 @@ public record NewBookRequest(
         int numberOfPages,
         @NotBlank
         @UniqueValue(fieldName = "isbn", domainClass = Book.class)
-        @ISBN
         String isbn,
         @NotNull
         @Future
-        @JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss")
+        @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
         LocalDateTime publicationDate,
-        @NotNull
-        @Min(1)
-        Long categoryId,
-        @NotNull
-        @Min(1)
-        Long authorId
+        @NotBlank
+        String categoryName,
+        @NotBlank
+        @Email
+        String emailAuthor
 ) {
 
         public Book toEntity(Category category, Author author) {
