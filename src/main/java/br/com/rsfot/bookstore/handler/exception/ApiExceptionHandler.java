@@ -1,5 +1,6 @@
 package br.com.rsfot.bookstore.handler.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,6 +19,10 @@ public class ApiExceptionHandler {
         return ResponseEntity.badRequest().body(fieldErrorResponses);
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<FieldErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception) {
+        return ResponseEntity.badRequest().body(new FieldErrorResponse("msg", exception.getMessage()));
+    }
 
     private record FieldErrorResponse(String field, String errorMessage) {
         public FieldErrorResponse(FieldError fieldError) {
