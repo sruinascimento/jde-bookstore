@@ -7,6 +7,8 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -111,11 +113,23 @@ public class Book {
         return publicationDate;
     }
 
-    public @NotNull Category getCategory() {
+    public String getPublicationDateAsBrazilianFormat() {
+        return publicationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss", Locale.of("pt_BR")));
+    }
+
+    public Category getCategory() {
         return category;
     }
 
-    public @NotNull Author getAuthor() {
+    public String getCategoryName() {
+        return category.getName();
+    }
+
+    public Author getAuthor() {
         return author;
+    }
+
+    public String getAuthorName() {
+        return author.getName();
     }
 }

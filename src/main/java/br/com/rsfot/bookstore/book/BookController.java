@@ -28,16 +28,16 @@ public class BookController {
 
     @PostMapping("/book")
     public ResponseEntity<?> create(@Valid @RequestBody NewBookRequest newBookRequest) {
-        Category category = categoryRepository.findById(newBookRequest.categoryId())
-                .orElseThrow(() -> new EntityNotFoundException("Category not found with id + " + newBookRequest.categoryId()));
-        Author author = authorRepository.findById(newBookRequest.authorId())
-                .orElseThrow(() -> new EntityNotFoundException("Author not found with id" + newBookRequest.authorId()));
+        Category category = categoryRepository.findByName(newBookRequest.categoryName())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with name: " + newBookRequest.categoryName()));
+        Author author = authorRepository.findByEmail(newBookRequest.emailAuthor())
+                .orElseThrow(() -> new EntityNotFoundException("Author not found with email: " + newBookRequest.emailAuthor()));
 
 
         Book newBook = newBookRequest.toEntity(category, author);
 
         bookRepository.save(newBook);
 
-        return ResponseEntity.ok(newBook.toString());
+        return ResponseEntity.ok(new NewBookResponse(newBook));
     }
 }
