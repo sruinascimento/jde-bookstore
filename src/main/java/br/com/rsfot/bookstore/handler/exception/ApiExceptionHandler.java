@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
+import java.util.Map;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -20,11 +21,11 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<FieldErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception) {
-        return ResponseEntity.badRequest().body(new FieldErrorResponse("msg", exception.getMessage()));
+    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(EntityNotFoundException exception) {
+        return ResponseEntity.badRequest().body(Map.of("errorMessage", exception.getMessage()));
     }
 
-    private record FieldErrorResponse(String field, String errorMessage) {
+    public record FieldErrorResponse(String field, String errorMessage) {
         public FieldErrorResponse(FieldError fieldError) {
             this(fieldError.getField(), fieldError.getDefaultMessage());
         }
