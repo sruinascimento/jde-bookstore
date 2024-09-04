@@ -7,10 +7,7 @@ import br.com.rsfot.bookstore.category.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,4 +48,11 @@ public class BookController {
 
         return ResponseEntity.ok(books);
     }
+
+    @GetMapping("/book/{id}")
+    public ResponseEntity<BookDetailsResponse> retrieveDetailsOfBook(@PathVariable("id") Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
+        return ResponseEntity.ok(new BookDetailsResponse(book));
+    }
+
 }
