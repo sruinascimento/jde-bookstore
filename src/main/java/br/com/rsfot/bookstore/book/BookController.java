@@ -50,8 +50,9 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    public void retrieveDetailsOfBook(@PathVariable("id") Long id) {
-        bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
+    public ResponseEntity<BookDetailsResponse> retrieveDetailsOfBook(@PathVariable("id") Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
+        return ResponseEntity.ok(new BookDetailsResponse(book));
     }
 
 }
