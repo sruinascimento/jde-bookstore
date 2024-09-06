@@ -5,6 +5,7 @@ import br.com.rsfot.bookstore.author.AuthorRepository;
 import br.com.rsfot.bookstore.category.Category;
 import br.com.rsfot.bookstore.category.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class BookController {
     }
 
     @PostMapping("/book")
+    @Transactional
     public ResponseEntity<?> create(@Valid @RequestBody NewBookRequest newBookRequest) {
         Category category = categoryRepository.findByName(newBookRequest.categoryName())
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with name: " + newBookRequest.categoryName()));
