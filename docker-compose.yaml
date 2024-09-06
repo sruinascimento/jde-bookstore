@@ -1,21 +1,16 @@
 services:
-  backend:
-    image: mysql:8.4.2
-    container_name: bookstore-db
+  db:
+    container_name: mysql
+    image: mysql:latest
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: bookstore
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    command:
+      --sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+    restart: always
     ports:
-      - "3307:3306"
-
+      - '3307:3306'
+    expose:
+      - '3307'
     volumes:
-      - mysql-data:/var/lib/mysql
-
-volumes:
-  mysql-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ~/.docker-volume/bookstore
+      - ~/.volume/mysql:/var/lib/mysql
