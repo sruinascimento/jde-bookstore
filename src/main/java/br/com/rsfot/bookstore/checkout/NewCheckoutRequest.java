@@ -1,17 +1,24 @@
 package br.com.rsfot.bookstore.checkout;
 
+import br.com.rsfot.bookstore.personalized.validation.CPFOrCNPJ;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record NewCheckoutRequest(
+        @NotNull
         @Email
         String email,
         @NotBlank
         String firstName,
         @NotBlank
         String lastName,
+        @CPFOrCNPJ
         String document,
+        @NotBlank
         String phone,
+        @Valid
         NewCheckoutAddressRequest newCheckoutAddressRequest
 ) {
 }
