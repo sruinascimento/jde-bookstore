@@ -18,7 +18,11 @@ public record NewCheckoutRequest(
         String document,
         @NotBlank
         String phone,
+        @NotNull
         @Valid
         NewCheckoutAddressRequest newCheckoutAddressRequest
 ) {
+    public String getCountryName() {
+        return newCheckoutAddressRequest.country();
+    }
 }
