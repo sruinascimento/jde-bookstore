@@ -22,7 +22,12 @@ public record NewCheckoutRequest(
         @Valid
         NewCheckoutAddressRequest newCheckoutAddressRequest
 ) {
+
     public String getCountryName() {
         return newCheckoutAddressRequest.country();
+    }
+
+    public String getStateName() {
+        return newCheckoutAddressRequest.state();
     }
 }

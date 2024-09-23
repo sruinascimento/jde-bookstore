@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExistsValue {
 
-    String message() default "Must be unique value";
+    String message() default "The value must be exist";
 
     Class<?>[] groups() default {};
 

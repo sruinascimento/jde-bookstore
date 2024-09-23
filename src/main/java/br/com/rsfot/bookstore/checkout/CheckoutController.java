@@ -1,35 +1,28 @@
 package br.com.rsfot.bookstore.checkout;
 
-import br.com.rsfot.bookstore.country.Country;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
+import br.com.rsfot.bookstore.personalized.validation.StateBelongsToCountryValidator;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CheckoutController {
+    private final StateBelongsToCountryValidator stateBelongsToCountryValidator;
 
-    @PersistenceContext
-    private final EntityManager entityManager;
+    public CheckoutController(StateBelongsToCountryValidator stateBelongsToCountryValidator) {
+        this.stateBelongsToCountryValidator = stateBelongsToCountryValidator;
+    }
 
-    public CheckoutController(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    @InitBinder
+    public void init(WebDataBinder binder) {
+        binder.addValidators(stateBelongsToCountryValidator);
     }
 
     @PostMapping("/checkout")
     public String create(@Valid @RequestBody NewCheckoutRequest newCheckoutRequest) {
-
-        Query query = entityManager.createQuery("select name from Country where name = :countryName");
-        query.setParameter("countryName", newCheckoutRequest.getCountryName());
-        try {
-            Country country = (Country) query.getSingleResult();
-        } catch (NoResultException exception) {
-            throw new IllegalArgumentException("The country %s does not exists ".formatted(newCheckoutRequest.getCountryName()));
-        }
         return newCheckoutRequest.toString();
     }
 }
