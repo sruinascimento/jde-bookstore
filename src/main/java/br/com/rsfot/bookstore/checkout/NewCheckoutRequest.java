@@ -14,6 +14,7 @@ public record NewCheckoutRequest(
         String firstName,
         @NotBlank
         String lastName,
+        @NotBlank
         @CPFOrCNPJ
         String document,
         @NotBlank
