@@ -21,7 +21,10 @@ public record NewCheckoutRequest(
         String phone,
         @NotNull
         @Valid
-        NewCheckoutAddressRequest newCheckoutAddressRequest
+        NewCheckoutAddressRequest newCheckoutAddressRequest,
+        @NotNull
+        @Valid
+        NewOrderRequest newOrderRequest
 ) {
 
     public String getCountryName() {
