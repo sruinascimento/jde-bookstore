@@ -15,6 +15,8 @@ public class Cart {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    private String email;
+
     @Column
     private String firstName;
 
@@ -27,27 +29,42 @@ public class Cart {
     @Embedded
     private Address address;
 
+    private String phone;
+
     @Transient
     private BigDecimal amount;
 
-    @OneToMany(mappedBy = "cart_id", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    Set<OrderItem> orders = new HashSet<>();
 
     @Deprecated
     public Cart() {
     }
 
-    public Cart(String firstName, String lastName, String document, Address address, BigDecimal amount, Set<Order> orders) {
+    public Cart(String email,
+                String firstName,
+                String lastName,
+                String document,
+                Address address,
+                String phone,
+                BigDecimal amount,
+                Set<OrderItem> orders) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.document = document;
         this.address = address;
+        this.phone = phone;
         this.amount = amount;
         this.orders = orders;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getFirstName() {
@@ -66,11 +83,15 @@ public class Cart {
         return address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public Set<Order> getOrders() {
+    public Set<OrderItem> getOrders() {
         return orders;
     }
 }

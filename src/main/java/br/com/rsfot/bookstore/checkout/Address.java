@@ -11,6 +11,8 @@ import jakarta.persistence.ManyToOne;
 public class Address {
     private String address;
 
+    private String complement;
+
     private String city;
 
     @Column(name = "zip_code")
@@ -28,8 +30,15 @@ public class Address {
     public Address() {
     }
 
-    public Address(String address, String city, String zipCode, State state, Country country) {
+
+    public Address(String address,
+                   String complement,
+                   String city,
+                   String zipCode,
+                   State state,
+                   Country country) {
         this.address = address;
+        this.complement = complement;
         this.city = city;
         this.zipCode = zipCode;
         this.state = state;
@@ -40,39 +49,23 @@ public class Address {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getComplement() {
+        return complement;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public String getStateName() {
+        return state.getName();
     }
 
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
+    public String getCountryName() {
+        return country.getName();
     }
 }

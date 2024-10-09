@@ -14,6 +14,6 @@ public record NewOrderRequest(
         BigDecimal amount,
         @Valid
         @Size(min = 1)
-        Set<OrderItem> items
+        Set<OrderItemRequest> items
 ) {
 }
